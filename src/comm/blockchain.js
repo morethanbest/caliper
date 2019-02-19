@@ -43,6 +43,10 @@ class Blockchain {
                 let composer = require('../adapters/composer/composer.js');
                 this.bcType = 'composer';
                 this.bcObj = new composer(configPath);
+            }else if(config.caliper.blockchain === 'fiscoBCOS') {
+                let fiscoBCOS = require('../adapters/fisco-bcos/fisco-bcos.js');
+                this.bcType = 'fiscoBCOS';
+                this.bcObj = new fiscoBCOS(configPath);
             }
             else {
                 this.bcType = 'unknown';
