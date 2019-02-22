@@ -23,7 +23,7 @@
       "agentNum" : "4"
     },
     "smartContracts" : [
-      {"id": "helloworld", "path": "contract/fisco-bcos/helloworld", "language":"solidity"}
+      {"id": "helloworld", "name" : "HelloWorld", "path": "contract/fisco-bcos/", "language":"solidity"}
     ]
   },
   "info" : {

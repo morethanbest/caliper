@@ -718,22 +718,21 @@ async function unlockAccount(account, password) {
         });
     });
 }
-async function rawDeploy(web3, account,  privateKey,filename,types,params) {
-
+async function rawDeploy(web3, account, privateKey, path, name, types, params) {
+    let pathName = path + name;
     try{
         //用FISCO-BCOS的合约编译器fisco-solc进行编译
-        if (config.EncryptType == 1) {
-            execSync('fisco-solc-guomi --overwrite --abi  --bin -o ' + config.Ouputpath + '  ' + filename + '.sol');
+        if (config.EncryptType === 1) {
+            execSync('fisco-solc-guomi --overwrite --abi --bin -o ' + path + ' ' + pathName + '.sol');
         }else{
-            execSync('fisco-solc --overwrite --abi  --bin -o ' + config.Ouputpath + '  ' + filename + '.sol');
+            execSync('fisco-solc --overwrite --abi --bin -o ' + path + ' ' + pathName + '.sol');
         }
-        console.log(filename+'complie success！');
+        console.log(pathName+'complie success！');
     } catch(e){
-        console.log(filename+'complie failed!' + e);
+        console.log(pathName+'complie failed!' + e);
     }
 
-    let abi=JSON.parse(fs.readFileSync(config.Ouputpath+ './'+filename+'.abi', 'utf-8'));
-    let binary=fs.readFileSync(config.Ouputpath+'./'+filename+'.bin','utf-8');
+    let binary=fs.readFileSync(pathName + '.bin','utf-8');
     let cons_hex_params = '';
     if( (typeof types !== 'undefined') && (typeof params !== 'undefined')) {
         cons_hex_params = coder.codeParams(types,params);
@@ -756,25 +755,17 @@ async function rawDeploy(web3, account,  privateKey,filename,types,params) {
                 console.log('send transaction success: ' + address);
 
                 checkForTransactionResult(address, (err, receipt) => {
-                    let addressjson={};
                     if( receipt.contractAddress ){
-                        console.log(filename+'contract address '+receipt.contractAddress);
-                        fs.writeFileSync(config.Ouputpath+filename+'.address', receipt.contractAddress, 'utf-8');
+                        console.log(pathName+'contract address '+receipt.contractAddress);
+                        fs.writeFileSync(pathName+'.address', receipt.contractAddress, 'utf-8');
 
                     }//if
-
                     // var contract = web3.eth.contract(abi).at(receipt.contractAddress);
-
                     resolve(receipt);
-                    return;
                 });
-
-                return;
             }
             else {
                 console.log('send transaction failed！',err);
-
-                return;
             }
         });
     });

@@ -8,7 +8,7 @@ const Web3 = require('web3');
 
 module.exports.run = async function (config_path) {
     const fiscoSettings = commUtils.parseYaml(config_path).fiscoBCOS;
-    const config = commUtils.parseYaml(config_path).config;
+    const config = fiscoSettings.config;
     let smartContracts = fiscoSettings.smartContracts;
     if(typeof smartContracts === 'undefined' || smartContracts.length === 0) {
         return;
@@ -17,7 +17,7 @@ module.exports.run = async function (config_path) {
     commLogger.info('Installing smart contracts...');
     try {
         for (let smartContract of smartContracts) {
-            await web3sync.rawDeploy(web3, config.account, config.privKey,  smartContract.path);
+            await web3sync.rawDeploy(web3, config.account, config.privKey,  smartContract.path, smartContract.name);
             commLogger.info(`Installed smart contract ${smartContract.id} successfully in all peers`);
         }
     } catch (err) {

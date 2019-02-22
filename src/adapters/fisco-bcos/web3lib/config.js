@@ -2,7 +2,7 @@ let proxy='http://127.0.0.1:8545';
 
 let encryptType = 0;// 0:ECDSA 1:sm2Withsm3
 //console.log('RPC='+proxy);
-let output='./output/';
+let output='./contract/';
 //console.log('Ouputpath='+output);
 
 module.exports={
