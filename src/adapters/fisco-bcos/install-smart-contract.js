@@ -4,7 +4,6 @@
 const commUtils = require('../../comm/util');
 const commLogger = commUtils.getLogger('install-smart-contact.js');
 const web3sync = require('./web3lib/web3sync');
-const Web3 = require('web3');
 
 module.exports.run = async function (config_path) {
     const fiscoSettings = commUtils.parseYaml(config_path).fiscoBCOS;
@@ -13,11 +12,11 @@ module.exports.run = async function (config_path) {
     if(typeof smartContracts === 'undefined' || smartContracts.length === 0) {
         return;
     }
-    let web3 = new Web3(new Web3.providers.HttpProvider(config.proxy));
+    web3sync.setWeb3(config.proxy);
     commLogger.info('Installing smart contracts...');
     try {
         for (let smartContract of smartContracts) {
-            await web3sync.rawDeploy(web3, config.account, config.privKey,  smartContract.path, smartContract.name);
+            await web3sync.rawDeploy(config.account, config.privKey,  smartContract.path, smartContract.name);
             commLogger.info(`Installed smart contract ${smartContract.id} successfully in all peers`);
         }
     } catch (err) {

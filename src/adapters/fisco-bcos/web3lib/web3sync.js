@@ -14,8 +14,11 @@ const BN = require('bn.js');
 const fs=require('fs');
 const execSync =require('child_process').execSync;
 const coder = require('./codeUtils');
-let config=require('./config');
+const Web3 = require('web3');
+let config = require('./config');
 let utils = require('./utils');
+
+let web3;
 /*
 *   npm install --save-dev babel-cli babel-preset-es2017
 *   echo '{ "presets": ["es2017"] }' > .babelrc
@@ -23,6 +26,13 @@ let utils = require('./utils');
 *   npm install keccak
 *   npm install rlp
 */
+function setWeb3(proxy){
+    if (typeof web3 !== 'undefined') {
+        web3 = new Web3(web3.currentProvider);
+    } else {
+        web3 = new Web3(new Web3.providers.HttpProvider(proxy));
+    }
+}
 
 function privateToPublic(privateKey) {
     return utils.privateToPublic(privateKey);
@@ -264,7 +274,7 @@ function ecsign(msgHash, privateKey) {
 const N_DIV_2 = new BN('7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a0', 16);
 
 function Transaction(data) {
-    if (config.EncryptType == 1) {
+    if (config.EncryptType === 1) {
         data = data || {};
         // Define Properties
         const fields = [{
@@ -718,7 +728,7 @@ async function unlockAccount(account, password) {
         });
     });
 }
-async function rawDeploy(web3, account, privateKey, path, name, types, params) {
+async function rawDeploy(account, privateKey, path, name, types, params) {
     let pathName = path + name;
     try{
         //用FISCO-BCOS的合约编译器fisco-solc进行编译
@@ -926,4 +936,5 @@ exports.rawDeploy = rawDeploy;
 exports.signTransaction=signTransaction;
 exports.sendUTXOTransaction = sendUTXOTransaction;
 exports.callUTXO = callUTXO;
+exports.setWeb3 = setWeb3;
 //exports.deploy=deploy;
