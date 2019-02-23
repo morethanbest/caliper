@@ -16,7 +16,7 @@ module.exports.run = async function (config_path) {
     commLogger.info('Installing smart contracts...');
     try {
         for (let smartContract of smartContracts) {
-            await web3sync.rawDeploy(config.account, config.privKey,  smartContract.path, smartContract.name);
+            await web3sync.rawDeploy(config.account, config.privateKey,  smartContract.path, smartContract.name);
             commLogger.info(`Installed smart contract ${smartContract.id} successfully in all peers`);
         }
     } catch (err) {
