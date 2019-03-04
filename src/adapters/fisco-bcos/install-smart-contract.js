@@ -12,7 +12,7 @@ module.exports.run = async function (config_path) {
     if(typeof smartContracts === 'undefined' || smartContracts.length === 0) {
         return;
     }
-    web3sync.setWeb3(config.proxy);
+    // web3sync.setWeb3(config.proxy);
     commLogger.info('Installing smart contracts...');
     try {
         for (let smartContract of smartContracts) {

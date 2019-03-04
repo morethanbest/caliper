@@ -7,7 +7,10 @@
 const BlockchainInterface = require('../../comm/blockchain-interface.js');
 const commUtils = require('../../comm/util');
 const impl_install = require('./install-smart-contract.js');
+const impl_invoke = require('./invoke-smart-contract.js');
 const commLogger = commUtils.getLogger('fisco-bcos.js');
+const web3sync = require('./web3lib/web3sync');
+const TxStatus  = require('../../comm/transaction');
 
 /**
  * Sawtooth class, which implements the caliper's NBI for hyperledger sawtooth lake
@@ -24,11 +27,12 @@ class FiscoBCOS extends BlockchainInterface {
     /**
      * Initialize the {Fisco} object.
      * Nothing to do now
-     * @return {Promise} The return promise.
      */
     init() {
         // todo: Fisco
-        return Promise.resolve();
+        const fiscoSettings = commUtils.parseYaml(this.configPath).fiscoBCOS;
+        const config = fiscoSettings.config;
+        web3sync.setWeb3(config.proxy);
     }
 
     /**
@@ -41,9 +45,24 @@ class FiscoBCOS extends BlockchainInterface {
         try {
             await impl_install.run(this.configPath);
         } catch (err) {
-            commLogger.error(`Fabric chaincode install failed: ${(err.stack ? err.stack : err)}`);
+            commLogger.error(`fisco-bcos smart contracts install failed: ${(err.stack ? err.stack : err)}`);
             throw err;
         }
+    }
+
+    /**
+     * Return the Fabric context associated with the given callback module name.
+     * @param {string} name The name of the callback module as defined in the configuration files.
+     * @param {object} args unused.
+     * @param {Integer} clientIdx The client index.
+     * @return {object} The assembled Fabric context.
+     * @async
+     */
+    async getContext(name, args, clientIdx) {
+        const fiscoSettings = commUtils.parseYaml(this.configPath).fiscoBCOS;
+        const config = fiscoSettings.config;
+        web3sync.setWeb3(config.proxy);
+        return Promise.resolve();
     }
 
     /**
@@ -56,31 +75,37 @@ class FiscoBCOS extends BlockchainInterface {
      * @return {Promise<object>} The promise for the result of the execution.
      */
     async invokeSmartContract(context, contractID, contractVer, args, timeout) {
+        const fiscoSettings = commUtils.parseYaml(this.configPath).fiscoBCOS;
         let promises = [];
-        args.forEach((item, index)=>{
-            // try {
-            //     let simpleArgs = [];
-            //     let func;
-            //     for(let key in item) {
-            //         if(key === 'transaction_type') {
-            //             func = item[key].toString();
-            //         }
-            //         else {
-            //             simpleArgs.push(item[key].toString());
-            //         }
-            //     }
-            //     if(func) {
-            //         simpleArgs.splice(0, 0, func);
-            //     }
-            //     promises.push(e2eUtils.invokebycontext(context, contractID, contractVer, simpleArgs, timeout));
-            // }
-            // catch(err) {
-            //     commLogger.error(err);
-            //     let badResult = new TxStatus('artifact');
-            //     badResult.SetStatusFail();
-            //     promises.push(Promise.resolve(badResult));
-            // }
-        });
+        try {
+            args.forEach((item, index)=>{
+                try {
+                    let simpleArgs = [];
+                    let func;
+                    for(let key in item) {
+                        if(key === 'transaction_type') {
+                            func = item[key].toString();
+                        }
+                        else {
+                            simpleArgs.push(item[key].toString());
+                        }
+                    }
+                    if(func) {
+                        simpleArgs.splice(0, 0, func);
+                    }
+                    promises.push(impl_invoke.submitTransaction(fiscoSettings, contractID, args, timeout));
+                }
+                catch(err) {
+                    commLogger.error(err);
+                    let badResult = new TxStatus('artifact');
+                    badResult.SetStatusFail();
+                    promises.push(Promise.resolve(badResult));
+                }
+            });
+        } catch (err) {
+            commLogger.error(`fisco-bcos smart contracts invoke failed: ${(err.stack ? err.stack : err)}`);
+            throw err;
+        }
         return await Promise.all(promises);
     }
 

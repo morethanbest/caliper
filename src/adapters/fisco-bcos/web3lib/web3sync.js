@@ -838,8 +838,7 @@ async function sendRawTransactionByNameService(account, privateKey, contract, fu
                 //resolve(address);
             }
             else {
-			    console.log('send transaction failed！',err);
-
+                console.log('send transaction failed！',err);
                 return;
             }
         });
@@ -879,8 +878,7 @@ async function sendRawTransaction(account, privateKey, to, func, params) {
                 //resolve(address);
             }
             else {
-			    console.log('send transaction failed！',err);
-
+                console.log('send transaction failed！',err);
                 return;
             }
         });
@@ -937,4 +935,5 @@ exports.signTransaction=signTransaction;
 exports.sendUTXOTransaction = sendUTXOTransaction;
 exports.callUTXO = callUTXO;
 exports.setWeb3 = setWeb3;
+exports.web3 = web3;
 //exports.deploy=deploy;
