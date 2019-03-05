@@ -35,7 +35,7 @@ module.exports.submitTransaction = async function (fiscoSettings, contractID, ar
     let address = fs.readFileSync(smartContract.path + smartContract.name + '.address', 'utf-8');
     let receipt = null;
     try {
-        receipt = await web3sync.sendRawTransaction(config.account, config.privKey, address, func, args);
+        receipt = await web3sync.sendRawTransaction(config.account, config.privateKey, address, func, args);
         invokeStatus.SetID(receipt.transactionHash);
         invokeStatus.SetResult(receipt);
         commLogger.info(`transaction hash ：${receipt.transactionHash}`);
