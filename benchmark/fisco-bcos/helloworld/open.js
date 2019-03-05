@@ -38,7 +38,7 @@ function generateWorkload() {
 
 module.exports.run = function() {
     let args = generateWorkload();
-    return bc.invokeSmartContract(contx, 'helloword', 'v0', args, 100);
+    return bc.invokeSmartContract(contx, 'helloworld', 'v0', args, 100);
 };
 
 module.exports.end = function() {

@@ -18,7 +18,6 @@ module.exports.submitTransaction = async function (fiscoSettings, contractID, ar
         return;
     }
     for (let sc of smartContracts) {
-        commLogger.info(`sc.id:${sc.id}, contract ID:${contractID}`);
         if (sc.id === contractID) {
             smartContract = sc;
         }
