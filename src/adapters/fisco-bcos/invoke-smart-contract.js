@@ -27,6 +27,7 @@ module.exports.submitTransaction = async function (fiscoSettings, contractID, ar
         return;
     }
     const func = args[0];
+    commLogger.info(`args[0] ：${args[0]}`);
     args.shift();
     // timestamps are recorded for every phase regardless of success/failure
     let invokeStatus = new TxStatus(config.account);

@@ -83,6 +83,7 @@ class FiscoBCOS extends BlockchainInterface {
                     let simpleArgs = [];
                     let func;
                     for(let key in item) {
+                        commLogger.info(`key ：${key}, value : ${item[key]}`);
                         if(key === 'transaction_type') {
                             func = item[key].toString();
                         }
