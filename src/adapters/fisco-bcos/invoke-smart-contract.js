@@ -28,8 +28,6 @@ module.exports.submitTransaction = async function (fiscoSettings, contractID, ar
     }
     const func = args[0];
     args.shift();
-    commLogger.info(`func: ${func}.`);
-    commLogger.info(`args[0]: ${args[0]}.`);
     // timestamps are recorded for every phase regardless of success/failure
     let invokeStatus = new TxStatus(config.account);
     let errFlag = TxErrorEnum.NoError;
@@ -41,13 +39,15 @@ module.exports.submitTransaction = async function (fiscoSettings, contractID, ar
         invokeStatus.SetID(receipt.transactionHash);
         invokeStatus.SetResult(receipt);
         invokeStatus.SetVerification(true);
+        invokeStatus.SetStatusSuccess();
     } catch (err) {
-        commLogger.error(`Failed to install smart contracts: ${(err.stack ? err.stack : err)}`);
+        commLogger.error(`Failed to invoke smart contracts: ${(err.stack ? err.stack : err)}`);
         errFlag |= TxErrorEnum.SandRawTransactionError;
         invokeStatus.SetFlag(errFlag);
         invokeStatus.SetErrMsg(TxErrorIndex.SandRawTransactionError, err.toString());
         invokeStatus.SetResult(receipt);
         invokeStatus.SetVerification(true);
+        invokeStatus.SetStatusFail();
         throw err;
     }
     return invokeStatus;
