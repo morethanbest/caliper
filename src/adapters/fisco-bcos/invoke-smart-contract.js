@@ -18,11 +18,12 @@ module.exports.submitTransaction = async function (fiscoSettings, contractID, ar
         return;
     }
     for (let sc of smartContracts) {
+        commLogger.info(`sc.id:${sc.id}, contract ID:${contractID}`);
         if (sc.id === contractID) {
             smartContract = sc;
         }
     }
-    if (smartContract === 'undefined') {
+    if (typeof smartContract === 'undefined') {
         commLogger.error(`Invoked smart contract failed. Smart contract ID ${contractID} undefined.`);
         return;
     }
