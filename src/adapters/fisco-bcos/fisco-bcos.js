@@ -83,7 +83,6 @@ class FiscoBCOS extends BlockchainInterface {
                     let simpleArgs = [];
                     let func;
                     for(let key in item) {
-                        commLogger.info(`key ：${key}, value : ${item[key]}`);
                         if(key === 'transaction_type') {
                             func = item[key].toString();
                         }
@@ -94,7 +93,7 @@ class FiscoBCOS extends BlockchainInterface {
                     if(func) {
                         simpleArgs.splice(0, 0, func);
                     }
-                    promises.push(impl_invoke.submitTransaction(fiscoSettings, contractID, args, timeout));
+                    promises.push(impl_invoke.submitTransaction(fiscoSettings, contractID, simpleArgs, timeout));
                 }
                 catch(err) {
                     commLogger.error(err);
