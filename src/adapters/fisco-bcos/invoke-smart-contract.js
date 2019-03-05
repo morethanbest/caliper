@@ -8,7 +8,7 @@ const fs = require('fs');
 const TxStatus  = require('../../comm/transaction');
 
 
-module.exports.submitTransaction = async function (fiscoSettings, contractID, args, timeout) {
+module.exports.submitTransaction = async function (context, fiscoSettings, contractID, args, timeout) {
     const TxErrorEnum = require('./constant.js').TxErrorEnum;
     const TxErrorIndex = require('./constant.js').TxErrorIndex;
     const config = fiscoSettings.config;
@@ -35,6 +35,9 @@ module.exports.submitTransaction = async function (fiscoSettings, contractID, ar
     let address = fs.readFileSync(smartContract.path + smartContract.name + '.address', 'utf-8');
     let receipt = null;
     try {
+        if(context.engine) {
+            context.engine.submitCallback(1);
+        }
         receipt = await web3sync.sendRawTransaction(config.account, config.privateKey, address, func, args);
         invokeStatus.SetID(receipt.transactionHash);
         invokeStatus.SetResult(receipt);

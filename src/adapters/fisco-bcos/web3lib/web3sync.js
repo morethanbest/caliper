@@ -829,13 +829,9 @@ async function sendRawTransactionByNameService(account, privateKey, contract, fu
     return new Promise((resolve, reject) => {
         web3.eth.sendRawTransaction(signTX, function(err, address) {
             if (!err) {
-                console.log('send transaction success: ' + address);
-
                 checkForTransactionResult(address, (err, receipt) => {
                     resolve(receipt);
                 });
-
-                //resolve(address);
             }
             else {
                 console.log('send transaction failed！',err);

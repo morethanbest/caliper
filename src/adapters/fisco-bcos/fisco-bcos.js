@@ -102,7 +102,7 @@ class FiscoBCOS extends BlockchainInterface {
                     if(func) {
                         simpleArgs.splice(0, 0, func);
                     }
-                    promises.push(impl_invoke.submitTransaction(fiscoSettings, contractID, simpleArgs, timeout));
+                    promises.push(impl_invoke.submitTransaction(context, fiscoSettings, contractID, simpleArgs, timeout));
                 }
                 catch(err) {
                     commLogger.error(err);
