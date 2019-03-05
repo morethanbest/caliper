@@ -28,6 +28,8 @@ module.exports.submitTransaction = async function (fiscoSettings, contractID, ar
     }
     const func = args[0];
     args.shift();
+    commLogger.info(`func: ${func}.`);
+    commLogger.info(`args[0]: ${args[0]}.`);
     // timestamps are recorded for every phase regardless of success/failure
     let invokeStatus = new TxStatus(config.account);
     let errFlag = TxErrorEnum.NoError;
@@ -38,7 +40,7 @@ module.exports.submitTransaction = async function (fiscoSettings, contractID, ar
         receipt = await web3sync.sendRawTransaction(config.account, config.privateKey, address, func, args);
         invokeStatus.SetID(receipt.transactionHash);
         invokeStatus.SetResult(receipt);
-        commLogger.info(`transaction hash ：${receipt.transactionHash}`);
+        invokeStatus.SetVerification(true);
     } catch (err) {
         commLogger.error(`Failed to install smart contracts: ${(err.stack ? err.stack : err)}`);
         errFlag |= TxErrorEnum.SandRawTransactionError;

@@ -66,6 +66,15 @@ class FiscoBCOS extends BlockchainInterface {
     }
 
     /**
+     * Release the given Fabric context.
+     * @param {object} context The Fabric context to release.
+     * @async
+     */
+    async releaseContext(context) {
+        await commUtils.sleep(1000);
+    }
+
+    /**
      * Invoke the given chaincode according to the specified options. Multiple transactions will be generated according to the length of args.
      * @param {object} context The Fabric context returned by {getContext}.
      * @param {string} contractID The name of the chaincode.
