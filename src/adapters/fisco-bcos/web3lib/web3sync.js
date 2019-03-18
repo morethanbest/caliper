@@ -607,8 +607,8 @@ function signTransaction(tx_data,privKey,callback)
     let serializedTx = '0x' + tx.serialize().toString('hex');
     if( callback !== null)
     {
-    	callback(serializedTx);
-    	return ;
+        callback(serializedTx);
+        return ;
     }
     else
     {
@@ -865,13 +865,9 @@ async function sendRawTransaction(account, privateKey, to, func, params) {
     return new Promise((resolve, reject) => {
         web3.eth.sendRawTransaction(signTX, function(err, address) {
             if (!err) {
-                console.log('send transaction success: ' + address);
-
                 checkForTransactionResult(address, (err, receipt) => {
                     resolve(receipt);
                 });
-
-                //resolve(address);
             }
             else {
                 console.log('send transaction failed！',err);
