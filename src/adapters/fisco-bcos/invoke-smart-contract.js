@@ -80,7 +80,7 @@ module.exports.submitQuery = async function(context, fiscoSettings, contractID, 
     let invokeStatus = new TxStatus(config.account);
     let errFlag = TxErrorEnum.NoError;
     invokeStatus.SetFlag(errFlag);
-    if (instance === 'undefined') {
+    if (typeof instance === 'undefined') {
         let address = fs.readFileSync(smartContract.path + smartContract.name + '.address', 'utf-8');
         let abi = JSON.parse(fs.readFileSync(smartContract.path + smartContract.name + '.abi', 'utf-8'));
         let contract = web3sync.getContract(abi);
