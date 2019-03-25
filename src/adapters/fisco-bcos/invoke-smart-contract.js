@@ -90,7 +90,7 @@ module.exports.submitQuery = async function(context, fiscoSettings, contractID, 
     }
     let result;
     // try {
-        result = instance[func]();
+        result = instance.get();
         commLogger.info(`${func} query returns ${result}.`);
     // }catch (e) {
     //     commLogger.error(`Query ${func} error.`);
