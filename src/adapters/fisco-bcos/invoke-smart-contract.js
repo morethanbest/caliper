@@ -5,6 +5,7 @@ const commUtils = require('../../comm/util');
 const commLogger = commUtils.getLogger ('install-smart-contact.js');
 const web3sync = require('./web3lib/web3sync');
 const fs = require('fs');
+const web3 = require('web3');
 const TxStatus  = require('../../comm/transaction');
 
 
@@ -53,5 +54,48 @@ module.exports.submitTransaction = async function (context, fiscoSettings, contr
         invokeStatus.SetStatusFail();
         throw err;
     }
+    return invokeStatus;
+};
+
+module.exports.submitQuery = async function(context, fiscoSettings, contractID, args){
+    const TxErrorEnum = require('./constant.js').TxErrorEnum;
+    const config = fiscoSettings.config;
+    let smartContracts = fiscoSettings.smartContracts;
+    let smartContract;
+    if(typeof smartContracts === 'undefined' || smartContracts.length === 0) {
+        return;
+    }
+    for (let sc of smartContracts) {
+        if (sc.id === contractID) {
+            smartContract = sc;
+        }
+    }
+    if (typeof smartContract === 'undefined') {
+        commLogger.error(`Invoked smart contract failed. Smart contract ID ${contractID} undefined.`);
+        return;
+    }
+    const func = args;
+    // const func = args[0];
+    // args.shift();
+    // timestamps are recorded for every phase regardless of success/failure
+    let invokeStatus = new TxStatus(config.account);
+    let errFlag = TxErrorEnum.NoError;
+    invokeStatus.SetFlag(errFlag);
+    let address = fs.readFileSync(smartContract.path + smartContract.name + '.address', 'utf-8');
+    let abi=JSON.parse(fs.readFileSync(smartContract.path + smartContract.name + '.abi', 'utf-8'));
+    let contract = web3sync.web3.eth.contract(abi);
+    let instance = contract.at(address);
+    if(context.engine) {
+        context.engine.submitCallback(1);
+    }
+    let result;
+    try {
+        result = instance[func]();
+        commLogger.info(`${func} query returns ${result}.`);
+    }catch (e) {
+        commLogger.error(`Query ${func} error.`);
+    }
+    invokeStatus.SetStatusSuccess();
+    invokeStatus.SetResult(result);
     return invokeStatus;
 };

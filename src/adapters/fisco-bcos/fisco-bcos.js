@@ -117,6 +117,20 @@ class FiscoBCOS extends BlockchainInterface {
         }
         return await Promise.all(promises);
     }
+    /**
+     * Query the given chaincode according to the specified options.
+     * @param {object} context The Fabric context returned by {getContext}.
+     * @param {string} contractID The name of the chaincode.
+     * @param {string} contractVer The version of the chaincode.
+     * @param {string} key The argument to pass to the chaincode query.
+     * @param {string} [fcn=query] The chaincode query function name.
+     * @return {Promise<object>} The promise for the result of the execution.
+     */
+    async queryState(context, contractID, contractVer, key, fcn = 'query') {
+        // TODO: change string key to general object
+        const fiscoSettings = commUtils.parseYaml(this.configPath).fiscoBCOS;
+        return await impl_invoke.submitQuery(context, fiscoSettings, contractID, fcn);
+    }
 
 }
 
