@@ -89,12 +89,12 @@ module.exports.submitQuery = async function(context, fiscoSettings, contractID, 
         context.engine.submitCallback(1);
     }
     let result;
-    // try {
-        result = instance.get();
-        commLogger.info(`${func} query returns ${result}.`);
-    // }catch (e) {
-    //     commLogger.error(`Query ${func} error.`);
-    // }
+    try {
+        result = instance[func]();
+        commLogger.info(`Constant function ${func} returns ${result}.`);
+    }catch (e) {
+        commLogger.error(`Query ${func} error. Msg: ${e}`);
+    }
     invokeStatus.SetStatusSuccess();
     invokeStatus.SetResult(result);
     return invokeStatus;

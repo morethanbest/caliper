@@ -20,7 +20,7 @@ test:
     callback: benchmark/fisco-bcos/helloworld/open.js
   - label: query
     txDuration:
-    - 15
+    - 5
     rateControl:
     - type: linear-rate
       opts:
