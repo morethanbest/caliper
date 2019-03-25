@@ -83,7 +83,7 @@ module.exports.submitQuery = async function(context, fiscoSettings, contractID, 
     invokeStatus.SetFlag(errFlag);
     let address = fs.readFileSync(smartContract.path + smartContract.name + '.address', 'utf-8');
     let abi=JSON.parse(fs.readFileSync(smartContract.path + smartContract.name + '.abi', 'utf-8'));
-    let contract = web3sync.web3.eth.contract(abi);
+    let contract = web3sync.getContract(abi);
     let instance = contract.at(address);
     if(context.engine) {
         context.engine.submitCallback(1);

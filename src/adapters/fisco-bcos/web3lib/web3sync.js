@@ -34,6 +34,10 @@ function setWeb3(proxy){
     }
 }
 
+function getContract(abi){
+    return web3.eth.contract(abi);
+}
+
 function privateToPublic(privateKey) {
     return utils.privateToPublic(privateKey);
 }
@@ -927,5 +931,5 @@ exports.signTransaction=signTransaction;
 exports.sendUTXOTransaction = sendUTXOTransaction;
 exports.callUTXO = callUTXO;
 exports.setWeb3 = setWeb3;
-exports.web3 = web3;
+exports.getContract = getContract;
 //exports.deploy=deploy;
