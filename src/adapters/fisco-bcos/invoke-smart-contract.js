@@ -5,9 +5,8 @@ const commUtils = require('../../comm/util');
 const commLogger = commUtils.getLogger ('install-smart-contact.js');
 const web3sync = require('./web3lib/web3sync');
 const fs = require('fs');
-const web3 = require('web3');
 const TxStatus  = require('../../comm/transaction');
-
+let instance;
 
 module.exports.submitTransaction = async function (context, fiscoSettings, contractID, args, timeout) {
     const TxErrorEnum = require('./constant.js').TxErrorEnum;
@@ -81,10 +80,12 @@ module.exports.submitQuery = async function(context, fiscoSettings, contractID, 
     let invokeStatus = new TxStatus(config.account);
     let errFlag = TxErrorEnum.NoError;
     invokeStatus.SetFlag(errFlag);
-    let address = fs.readFileSync(smartContract.path + smartContract.name + '.address', 'utf-8');
-    let abi=JSON.parse(fs.readFileSync(smartContract.path + smartContract.name + '.abi', 'utf-8'));
-    let contract = web3sync.getContract(abi);
-    let instance = contract.at(address);
+    if (instance === 'undefined') {
+        let address = fs.readFileSync(smartContract.path + smartContract.name + '.address', 'utf-8');
+        let abi = JSON.parse(fs.readFileSync(smartContract.path + smartContract.name + '.abi', 'utf-8'));
+        let contract = web3sync.getContract(abi);
+        instance = contract.at(address);
+    }
     if(context.engine) {
         context.engine.submitCallback(1);
     }
