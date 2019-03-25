@@ -22,10 +22,9 @@ test:
     txDuration:
     - 5
     rateControl:
-    - type: linear-rate
+    - type: fixed-rate
       opts:
-        startingTps: 25
-        finishingTps: 75
+        tps: 25
     callback: benchmark/fisco-bcos/helloworld/query.js
 monitor:
   type:

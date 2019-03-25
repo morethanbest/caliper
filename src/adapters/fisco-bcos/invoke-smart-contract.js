@@ -85,7 +85,6 @@ module.exports.submitQuery = async function(context, fiscoSettings, contractID, 
         let abi = JSON.parse(fs.readFileSync(smartContract.path + smartContract.name + '.abi', 'utf-8'));
         let contract = web3sync.getContract(abi);
         instance = contract.at(address);
-        commLogger.info('?????????');
     }
     if(context.engine) {
         context.engine.submitCallback(1);
