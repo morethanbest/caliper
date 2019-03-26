@@ -5,7 +5,7 @@ test:
     performance with simple account opening & querying transactions
   clients:
     type: local
-    number: 5
+    number: 2
   rounds:
   - label: open-liner
     txDuration:
