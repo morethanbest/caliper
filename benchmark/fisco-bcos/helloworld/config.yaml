@@ -24,7 +24,7 @@ test:
     rateControl:
     - type: fixed-rate
       opts:
-        tps: 3
+        tps: 10
     callback: benchmark/fisco-bcos/helloworld/query.js
 monitor:
   type:
