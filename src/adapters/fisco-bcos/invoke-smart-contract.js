@@ -91,7 +91,7 @@ module.exports.submitQuery = async function(context, fiscoSettings, contractID, 
     }
     let result;
     try {
-        result = instance[func]();
+        result = await instance[func]();
         commLogger.info(`Constant function ${func} returns ${result}.`);
     }catch (e) {
         commLogger.error(`Query ${func} error. Msg: ${e}`);
