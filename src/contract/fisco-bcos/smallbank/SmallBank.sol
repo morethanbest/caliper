@@ -12,8 +12,8 @@ contract SmallBank {
     mapping(string=>uint) checkingStore;
 
     function createAccount(string arg0, uint arg1) public {
-        savingStore[arg0] = 10000;
-        checkingStore[arg0] = 10000;
+        savingStore[arg0] = 0;
+        checkingStore[arg0] = arg1;
     }
 
     function amalgamate(string arg0, string arg1) public {

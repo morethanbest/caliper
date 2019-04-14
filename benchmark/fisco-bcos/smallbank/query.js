@@ -24,7 +24,7 @@ module.exports.init = function(blockchain, context, args) {
 function generateWorkload() {
     let acc = {
         'query_type': 'getBalance',
-        'string': 'account-' + accountCount.toString(),
+        'string': 'account-0'/* + accountCount.toString()*/,
     };
     accountCount++;
     return acc;
