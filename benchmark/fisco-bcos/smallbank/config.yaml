@@ -9,7 +9,7 @@ test:
   rounds:
   - label: create account
     txNumber:
-    - 1000
+    - 100
     rateControl:
     - type: fixed-rate
       opts:
@@ -19,7 +19,7 @@ test:
     callback: benchmark/fisco-bcos/smallbank/open.js
   - label: transfer money
     txNumber:
-    - 1000
+    - 100
     rateControl:
     - type: fixed-rate
       opts:
@@ -29,7 +29,7 @@ test:
     callback: benchmark/fisco-bcos/smallbank/transfer.js
   - label: query balance
     txNumber:
-    - 1000
+    - 100
     rateControl:
     - type: fixed-rate
       opts:
