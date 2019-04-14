@@ -39,7 +39,7 @@ module.exports.submitTransaction = async function (context, fiscoSettings, contr
             context.engine.submitCallback(1);
         }
         for(let arg in args){
-            commLogger.info(`arg ${arg}`);
+            commLogger.info(`arg ${args[arg]}`);
         }
         receipt = await web3sync.sendRawTransaction(config.account, config.privateKey, address, func, args);
         invokeStatus.SetID(receipt.transactionHash);
@@ -80,7 +80,7 @@ module.exports.submitQuery = async function(context, fiscoSettings, contractID, 
     const func = args[0];
     args.shift();
     for(let arg in args){
-        commLogger.info(`arg ${arg}`);
+        commLogger.info(`arg ${args[arg]}`);
     }
     // timestamps are recorded for every phase regardless of success/failure
     let invokeStatus = new TxStatus(config.account);
