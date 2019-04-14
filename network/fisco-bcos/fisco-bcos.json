@@ -23,7 +23,8 @@
       "agentNum" : "4"
     },
     "smartContracts" : [
-      {"id": "helloworld", "name" : "HelloWorld", "path": "src/contract/fisco-bcos/helloworld/", "language":"solidity"}
+      {"id": "helloworld", "name" : "HelloWorld", "path": "src/contract/fisco-bcos/helloworld/", "language":"solidity"},
+      {"id": "smallbank", "name" : "SmallBank", "path": "src/contract/fisco-bcos/smallbank/", "language":"solidity"}
     ]
   },
   "info" : {

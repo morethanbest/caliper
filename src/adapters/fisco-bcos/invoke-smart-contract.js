@@ -73,9 +73,9 @@ module.exports.submitQuery = async function(context, fiscoSettings, contractID, 
         commLogger.error(`Invoked smart contract failed. Smart contract ID ${contractID} undefined.`);
         return;
     }
-    const func = args;
-    // const func = args[0];
-    // args.shift();
+    // const func = args;
+    const func = args[0];
+    args.shift();
     // timestamps are recorded for every phase regardless of success/failure
     let invokeStatus = new TxStatus(config.account);
     let errFlag = TxErrorEnum.NoError;
@@ -91,7 +91,7 @@ module.exports.submitQuery = async function(context, fiscoSettings, contractID, 
     }
     let result;
     try {
-        result = await instance[func]();
+        result = await instance[func].apply(this, args);
         commLogger.info(`Constant function ${func} returns ${result}.`);
     }catch (e) {
         commLogger.error(`Query ${func} error. Msg: ${e}`);

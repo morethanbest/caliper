@@ -126,10 +126,31 @@ class FiscoBCOS extends BlockchainInterface {
      * @param {string} [fcn=query] The chaincode query function name.
      * @return {Promise<object>} The promise for the result of the execution.
      */
-    async queryState(context, contractID, contractVer, key, fcn = 'query') {
+    async queryState(context, contractID, contractVer, key, fcn) {
         // TODO: change string key to general object
         const fiscoSettings = commUtils.parseYaml(this.configPath).fiscoBCOS;
-        return await impl_invoke.submitQuery(context, fiscoSettings, contractID, fcn);
+        let simpleArgs = [];
+        let func;
+        try {
+            for(let key in fcn) {
+                if(key === 'transaction_type') {
+                    func = fcn[key].toString();
+                }
+                else {
+                    simpleArgs.push(fcn[key].toString());
+                }
+            }
+            if(func) {
+                simpleArgs.splice(0, 0, func);
+            }
+        }
+        catch(err) {
+            commLogger.error(err);
+            let badResult = new TxStatus('artifact');
+            badResult.SetStatusFail();
+            return badResult;
+        }
+        return await impl_invoke.submitQuery(context, fiscoSettings, contractID, simpleArgs);
     }
 
 }
