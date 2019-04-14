@@ -31,7 +31,7 @@ function generateWorkload() {
     let workload = [];
     for(let i = 0; i < txnPerBatch; i++) {
         let acc = {
-            'transaction_type': 'sendPayment(string, string, uint)',
+            'transaction_type': 'sendPayment(string,string,uint)',
             'from': 'account-' + accountCount.toString(),
             'to': 'account-' + (++accountCount).toString(),
             'money': transferMoney--
