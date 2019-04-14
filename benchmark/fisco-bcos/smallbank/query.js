@@ -23,7 +23,7 @@ module.exports.init = function(blockchain, context, args) {
  */
 function generateWorkload() {
     let acc = {
-        'transaction_type': 'getBalance',
+        'query_type': 'getBalance',
         'string': 'account-' + accountCount.toString(),
     };
     accountCount++;

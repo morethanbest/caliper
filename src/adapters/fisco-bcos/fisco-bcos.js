@@ -133,7 +133,7 @@ class FiscoBCOS extends BlockchainInterface {
         let func;
         try {
             for(let key in fcn) {
-                if(key === 'transaction_type') {
+                if(key === 'query_type') {
                     func = fcn[key].toString();
                 }
                 else {

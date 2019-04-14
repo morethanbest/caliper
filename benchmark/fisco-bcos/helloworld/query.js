@@ -18,7 +18,7 @@ module.exports.init = function(blockchain, context, args) {
 };
 
 module.exports.run = function() {
-    return bc.queryState(contx, 'helloworld', 'v0', null, 'get');
+    return bc.queryState(contx, 'helloworld', 'v0', null, {'query_type' : 'get'});
 };
 
 module.exports.end = function() {
