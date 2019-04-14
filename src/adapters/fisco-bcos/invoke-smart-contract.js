@@ -2,7 +2,7 @@
 'use strict';
 
 const commUtils = require('../../comm/util');
-const commLogger = commUtils.getLogger ('install-smart-contact.js');
+const commLogger = commUtils.getLogger ('invoke-smart-contact.js');
 const web3sync = require('./web3lib/web3sync');
 const fs = require('fs');
 const TxStatus  = require('../../comm/transaction');

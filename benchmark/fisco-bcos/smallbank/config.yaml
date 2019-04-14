@@ -25,7 +25,7 @@ test:
       opts:
         tps: 10
     arguments:
-      money: 9999
+      money: 200
     callback: benchmark/fisco-bcos/smallbank/transfer.js
   - label: query balance
     txNumber:
