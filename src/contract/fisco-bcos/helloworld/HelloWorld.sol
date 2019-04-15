@@ -1,14 +1,14 @@
 pragma solidity ^0.4.2;
 contract HelloWorld{
     string name;
-    mapping(string=>string) test;
+    mapping(string=>uint) test;
     function HelloWorld(){
        name="Hi,Welcome!";
     }
-    function get(string n)constant returns(string){
+    function get(string n)constant returns(uint){
         return test[n];
     }
-    function set(string n, string f){
+    function set(uint n, string f){
         test["123"] = n;
     	name = f;
     }
