@@ -21,7 +21,7 @@ let Coder = require('web3/lib/solidity/coder');
 function codeParams(types,params)
 {
     let code_ret = Coder.encodeParams(types, params);
-    console.log('code_ret : ',code_ret);
+    // console.log('code_ret : ',code_ret);
     return code_ret;
 }
 

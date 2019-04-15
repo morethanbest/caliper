@@ -9,7 +9,7 @@ contract HelloWorld{
         return name;
     }
     function set(uint n){
-        test = n;
+        test = 1234;
     	name = "helloworld";
     }
 }
