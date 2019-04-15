@@ -1,7 +1,7 @@
 pragma solidity ^0.4.2;
 contract HelloWorld{
     string name;
-    mapping(string=>uint) test;
+    uint test;
     function HelloWorld(){
        name="Hi,Welcome!";
     }
@@ -9,7 +9,7 @@ contract HelloWorld{
         return name;
     }
     function set(uint n){
-        test["123"] = n;
+        test = n;
     	name = "helloworld";
     }
 }
