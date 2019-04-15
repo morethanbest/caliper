@@ -29,7 +29,7 @@ contract SmallBank {
         uint bal2 = checkingStore[arg0];
 
         balance = bal1 + bal2;
-        return checkingStore["account-10"] + 1000;
+        return balance;
     }
 
     function updateBalance(string arg0, uint arg1) public {
