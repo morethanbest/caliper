@@ -5,8 +5,8 @@ contract HelloWorld{
     function HelloWorld(){
        name="Hi,Welcome!";
     }
-    function get()constant returns(string){
-        return test["123"];
+    function get(string n)constant returns(string){
+        return test[n];
     }
     function set(string n){
         test["123"] = "456";
