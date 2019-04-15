@@ -9,18 +9,18 @@ test:
   rounds:
   - label: open-liner
     txDuration:
-    - 5
+    - 3
     rateControl:
     - type: linear-rate
       opts:
         startingTps: 25
-        finishingTps: 75
+        finishingTps: 50
     arguments:
       money: 10000
     callback: benchmark/fisco-bcos/helloworld/open.js
   - label: query
     txDuration:
-    - 5
+    - 3
     rateControl:
     - type: fixed-rate
       opts:
