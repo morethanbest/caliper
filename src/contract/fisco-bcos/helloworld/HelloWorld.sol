@@ -6,10 +6,10 @@ contract HelloWorld{
        name="Hi,Welcome!";
     }
     function get(string n)constant returns(string){
-        return test[n];
+        return name;
     }
-    function set(string n){
-        test["123"] = "456";
-    	name=n;
+    function set(string n, string f){
+        test["123"] = f;
+    	name = n;
     }
 }

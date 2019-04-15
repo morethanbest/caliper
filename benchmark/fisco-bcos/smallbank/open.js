@@ -31,8 +31,8 @@ function generateWorkload() {
     let workload = [];
     for(let i = 0; i < txnPerBatch; i++) {
         let acc = {
-            'transaction_type': 'createAccount(string)',
-            // 'string': 'account-' + process.pid.toString() + accountCount.toString(),
+            'transaction_type': 'createAccount(string,uint)',
+            'string': 'account-' + process.pid.toString() + accountCount.toString(),
             'money': initMoney
         };
         accountCount++;
