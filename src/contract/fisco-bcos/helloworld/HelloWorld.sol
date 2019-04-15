@@ -6,7 +6,7 @@ contract HelloWorld{
        name="Hi,Welcome!";
     }
     function get(string n)constant returns(string){
-        return name;
+        return test[n];
     }
     function set(string n, string f){
         test["123"] = n;
