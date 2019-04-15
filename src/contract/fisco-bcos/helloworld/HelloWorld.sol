@@ -9,7 +9,7 @@ contract HelloWorld{
         return test[n];
     }
     function set(uint n, string f){
-        test["123"] = n + 100;
+        test["123"] = n;
     	name = f;
     }
 }

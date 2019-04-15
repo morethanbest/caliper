@@ -42,10 +42,19 @@ module.exports.submitTransaction = async function (context, fiscoSettings, contr
             commLogger.info(`arg ${args[arg]}`);
         }
         receipt = await web3sync.sendRawTransaction(config.account, config.privateKey, address, func, args);
-        invokeStatus.SetID(receipt.transactionHash);
-        invokeStatus.SetResult(receipt);
-        invokeStatus.SetVerification(true);
-        invokeStatus.SetStatusSuccess();
+        if(typeof receipt.error === 'undefined') {
+            invokeStatus.SetID(receipt.transactionHash);
+            invokeStatus.SetResult(receipt);
+            invokeStatus.SetVerification(true);
+            invokeStatus.SetStatusSuccess();
+        } else {
+            let err = receipt.error;
+            invokeStatus.SetID('artifact');
+            invokeStatus.SetResult(receipt);
+            invokeStatus.SetVerification(true);
+            invokeStatus.SetStatusFail();
+            commLogger.error(`Failed to invoke smart contracts: ${(err.stack ? err.stack : err)}`);
+        }
     } catch (err) {
         commLogger.error(`Failed to invoke smart contracts: ${(err.stack ? err.stack : err)}`);
         errFlag |= TxErrorEnum.SandRawTransactionError;
