@@ -8,8 +8,8 @@ contract HelloWorld{
     function get(string n)constant returns(string){
         return name;
     }
-    function set(uint n, string f){
+    function set(uint n){
         test["123"] = n;
-    	name = f;
+    	name = "helloworld";
     }
 }
