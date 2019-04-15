@@ -42,7 +42,7 @@ module.exports.submitTransaction = async function (context, fiscoSettings, contr
             commLogger.info(`arg ${args[arg]}`);
         }
         receipt = await web3sync.sendRawTransaction(config.account, config.privateKey, address, func, args);
-        commLogger.info(`contract return ${receipt.stringify()}`);
+        commLogger.info(`contract return ${JSON.stringify(receipt)}`);
         if(typeof receipt.error === 'undefined') {
             invokeStatus.SetID(receipt.transactionHash);
             invokeStatus.SetResult(receipt);
