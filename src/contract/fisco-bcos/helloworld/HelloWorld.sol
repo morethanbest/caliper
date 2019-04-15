@@ -5,8 +5,8 @@ contract HelloWorld{
     function HelloWorld(){
        name="Hi,Welcome!";
     }
-    function get(string n)constant returns(string){
-        return name;
+    function get(string n)constant returns(uint){
+        return test;
     }
     function set(uint n){
         test = 1234;
