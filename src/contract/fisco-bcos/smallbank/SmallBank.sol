@@ -24,10 +24,12 @@ contract SmallBank {
        savingStore[arg1] = bal1 + bal2;
     }
 
-    function getBalance(string arg0) public constant returns (uint) {
+    function getBalance(string arg0) public constant returns (uint balance) {
         uint bal1 = savingStore[arg0];
         uint bal2 = checkingStore[arg0];
-        return bal1 + bal2;
+
+        balance = bal1 + bal2;
+        return checkingStore["account-10"];
     }
 
     function updateBalance(string arg0, uint arg1) public {
