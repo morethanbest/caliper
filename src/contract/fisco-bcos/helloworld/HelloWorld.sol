@@ -1,14 +1,14 @@
 pragma solidity ^0.4.2;
 contract HelloWorld{
     string name;
-    int test;
+    uint test;
     function HelloWorld(){
        name="Hi,Welcome!";
     }
-    function get(string n)constant returns(int){
+    function get(string n)constant returns(uint){
         return test;
     }
-    function set(string n){
+    function set(uint n){
         test = 1234;
     	name = "helloworld";
     }
