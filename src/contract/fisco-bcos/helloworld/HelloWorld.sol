@@ -8,7 +8,7 @@ contract HelloWorld{
     function get(string n)constant returns(int){
         return test;
     }
-    function set(int n){
+    function set(string n){
         test = 1234;
     	name = "helloworld";
     }
