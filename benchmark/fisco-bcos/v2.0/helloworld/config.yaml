@@ -1,0 +1,39 @@
+---
+test:
+  name: helloword
+  description: This is an example benchmark for caliper, to test the backend DLT's
+    performance with simple account opening & querying transactions
+  clients:
+    type: local
+    number: 2
+  rounds:
+  - label: open-liner
+    txDuration:
+    - 3
+    rateControl:
+    - type: linear-rate
+      opts:
+        startingTps: 25
+        finishingTps: 50
+    arguments:
+      money: 10000
+    callback: benchmark/fisco-bcos/v2.0/helloworld/open.js
+  - label: query
+    txDuration:
+    - 3
+    rateControl:
+    - type: fixed-rate
+      opts:
+        tps: 10
+    callback: benchmark/fisco-bcos/v2.0/helloworld/query.js
+monitor:
+  type:
+  - process
+  docker:
+    name:
+    - all
+  process:
+  - command: node
+    arguments: local-client.js
+    multiOutput: avg
+  interval: 1
