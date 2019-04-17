@@ -1,6 +1,6 @@
 ---
 test:
-  name: helloword
+  name: smallbank
   description: This is an example benchmark for caliper, to test the backend DLT's
     performance with simple account opening & querying transactions
   clients:
