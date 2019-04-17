@@ -8,7 +8,7 @@
 
 'use strict';
 
-const Util = require('../../../src/comm/util');
+const Util = require('../../../../src/comm/util');
 
 let configFile;
 let networkFile;
@@ -72,7 +72,7 @@ function main() {
         return;
     }
 
-    const framework = require('../../../src/comm/bench-flow.js');
+    const framework = require('../../../../src/comm/bench-flow.js');
     (async () => {
         try {
             await framework.run(absConfigFile, absNetworkFile);

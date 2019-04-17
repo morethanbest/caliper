@@ -7,24 +7,25 @@ test:
     type: local
     number: 2
   rounds:
-  - label: create account
-    txNumber:
-    - 30
+  - label: open-liner
+    txDuration:
+    - 3
     rateControl:
-    - type: fixed-rate
+    - type: linear-rate
       opts:
-        tps: 10
+        startingTps: 25
+        finishingTps: 50
     arguments:
       money: 10000
-    callback: benchmark/fisco-bcos/smallbank/open.js
-  - label: query balance
-    txNumber:
-    - 30
+    callback: benchmark/fisco-bcos/v1.3/helloworld/open.js
+  - label: query
+    txDuration:
+    - 3
     rateControl:
     - type: fixed-rate
       opts:
         tps: 10
-    callback: benchmark/fisco-bcos/smallbank/query.js
+    callback: benchmark/fisco-bcos/v1.3/helloworld/query.js
 monitor:
   type:
   - process

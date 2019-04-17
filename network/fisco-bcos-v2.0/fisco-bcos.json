@@ -1,0 +1,35 @@
+{
+  "caliper": {
+    "blockchain": "fiscoBCOS-v2",
+    "command" : {
+      "start": "echo start",
+      "end" : "echo end"
+    }
+  },
+  "fiscoBCOS": {
+    "config" : {
+      "proxy": "http://127.0.0.1:8545",
+      "privateKey": "bcec428d5205abe0f0cc8a734083908d9eb8563e31f943d760786edf42ad67dd",
+      "account": "0x64fa644d2a694681bd6addd6c5e36cccd8dcdde3"
+    },
+    "ports" : {
+      "rpc" : "8545",
+      "p2p" : "30303",
+      "channel" : "8821"
+    },
+    "node0" : {
+      "name" : "agent_0",
+      "p2pIP" : "127.0.0.1",
+      "agentNum" : "4"
+    },
+    "smartContracts" : [
+      {"id": "helloworld", "name" : "HelloWorld", "path": "src/contract/fisco-bcos/helloworld/", "language":"solidity"},
+      {"id": "smallbank", "name" : "SmallBank", "path": "src/contract/fisco-bcos/smallbank/", "language":"solidity"}
+    ]
+  },
+  "info" : {
+    "Version": "2.0.0",
+    "Size": "4 Agents",
+    "Distribution": "Single Host"
+  }
+}
