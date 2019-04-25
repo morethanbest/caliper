@@ -1,9 +1,3 @@
-/**
- * Copyright 2017 HUAWEI. All Rights Reserved.
- *
- * SPDX-License-Identifier: Apache-2.0
- *
- */
 
 'use strict';
 
@@ -18,7 +12,7 @@ module.exports.init = function(blockchain, context, args) {
 };
 
 /**
- * Generates simple workload
+ * Generates smallbank workload
  * @returns {Object} array of json objects
  */
 function generateWorkload() {

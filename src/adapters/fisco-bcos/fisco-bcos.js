@@ -13,12 +13,12 @@ const web3sync = require('./web3lib/web3sync');
 const TxStatus  = require('../../comm/transaction');
 
 /**
- * Sawtooth class, which implements the caliper's NBI for hyperledger sawtooth lake
+ * FiscoBCOS class, which implements the caliper's NBI for fisco-bcos 1.3
  */
 class FiscoBCOS extends BlockchainInterface {
     /**
      * Constructor
-     * @param {String} config_path path of the Sawtooth configuration file
+     * @param {String} config_path path of the fisco-bcos configuration file
      */
     constructor(config_path) {
         super(config_path);
@@ -26,7 +26,7 @@ class FiscoBCOS extends BlockchainInterface {
 
     /**
      * Initialize the {Fisco} object.
-     * Nothing to do now
+     * init web3
      */
     init() {
         // todo: Fisco
@@ -36,12 +36,12 @@ class FiscoBCOS extends BlockchainInterface {
     }
 
     /**
-     * Deploy the chaincode specified in the network configuration file to all peers.
+     * Deploy the smart contract specified in the network configuration file to all peers.
      * Not supported now
      * {Promise} The return promise.
      */
     async installSmartContract() {
-        // todo: now all chaincodes are installed and instantiated in all peers, should extend this later
+        // todo: now all smart contracts are installed and instantiated in all peers, should extend this later
         try {
             await impl_install.run(this.configPath);
         } catch (err) {
@@ -51,7 +51,7 @@ class FiscoBCOS extends BlockchainInterface {
     }
 
     /**
-     * Return the Fabric context associated with the given callback module name.
+     * Return the fisco-bcos context associated with the given callback module name.
      * @param {string} name The name of the callback module as defined in the configuration files.
      * @param {object} args unused.
      * @param {Integer} clientIdx The client index.
@@ -75,11 +75,11 @@ class FiscoBCOS extends BlockchainInterface {
     }
 
     /**
-     * Invoke the given chaincode according to the specified options. Multiple transactions will be generated according to the length of args.
+     * Invoke the given smart contract according to the specified options. Multiple transactions will be generated according to the length of args.
      * @param {object} context The Fabric context returned by {getContext}.
-     * @param {string} contractID The name of the chaincode.
-     * @param {string} contractVer The version of the chaincode.
-     * @param {Array} args Array of JSON formatted arguments for transaction(s). Each element contains arguments (including the function name) passing to the chaincode. JSON attribute named transaction_type is used by default to specify the function name. If the attribute does not exist, the first attribute will be used as the function name.
+     * @param {string} contractID The name of the smart contract.
+     * @param {string} contractVer The version of the smart contract.
+     * @param {Array} args Array of JSON formatted arguments for transaction(s). Each element contains arguments (including the function name) passing to the smart contract. JSON attribute named transaction_type is used by default to specify the function name. If the attribute does not exist, the first attribute will be used as the function name.
      * @param {number} timeout The timeout to set for the execution in seconds.
      * @return {Promise<object>} The promise for the result of the execution.
      */
@@ -118,12 +118,12 @@ class FiscoBCOS extends BlockchainInterface {
         return await Promise.all(promises);
     }
     /**
-     * Query the given chaincode according to the specified options.
+     * Query the given smart contract according to the specified options.
      * @param {object} context The Fabric context returned by {getContext}.
-     * @param {string} contractID The name of the chaincode.
-     * @param {string} contractVer The version of the chaincode.
-     * @param {string} key The argument to pass to the chaincode query.
-     * @param {string} [fcn=query] The chaincode query function name.
+     * @param {string} contractID The name of the smart contract.
+     * @param {string} contractVer The version of the smart contract.
+     * @param {string} key The argument to pass to the smart contract query.
+     * @param {string} fcn The smart contract query function name.
      * @return {Promise<object>} The promise for the result of the execution.
      */
     async queryState(context, contractID, contractVer, key, fcn) {

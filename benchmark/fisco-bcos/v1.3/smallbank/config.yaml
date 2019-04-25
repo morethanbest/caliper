@@ -35,4 +35,6 @@ monitor:
   - command: node
     arguments: local-client.js
     multiOutput: avg
+  - command: fisco-bcos
+    multiOutput: avg
   interval: 1
