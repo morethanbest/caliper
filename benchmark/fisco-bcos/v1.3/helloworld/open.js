@@ -22,7 +22,7 @@ function generateWorkload() {
     let workload = [];
     for(let i= 0; i < txnPerBatch; i++) {
         let acc = {
-            'transaction_type': 'set(uint256)',
+            'transaction_type': 'set(string)',
             'string': /*'hello!!!!' +*/ process.pid.toString(),
             // 'string1': 'hello----' + process.pid.toString()
         };

@@ -41,7 +41,7 @@ function main() {
 
     const path = require('path');
     const fs = require('fs-extra');
-    let logger = Util.getLogger('benchmark/fisco-bcos/helloword/main.js');
+    let logger = Util.getLogger('benchmark/fisco-bcos/v1.3/helloword/main.js');
     let absConfigFile;
     if(typeof configFile === 'undefined') {
         absConfigFile = path.join(__dirname, 'config.yaml');

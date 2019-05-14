@@ -41,7 +41,7 @@ function main() {
 
     const path = require('path');
     const fs = require('fs-extra');
-    let logger = Util.getLogger('benchmark/fisco-bcos/helloword/main.js');
+    let logger = Util.getLogger('benchmark/fisco-bcos/v2.0/helloword/main.js');
     let absConfigFile;
     if(typeof configFile === 'undefined') {
         absConfigFile = path.join(__dirname, 'config.yaml');
@@ -57,7 +57,7 @@ function main() {
     let absNetworkFile;
     if(typeof networkFile === 'undefined') {
         try{
-            absNetworkFile = Util.resolvePath('network/fisco-bcos/fisco-bcos.json');
+            absNetworkFile = Util.resolvePath('network/fisco-bcos-v2.0/fisco-bcos.json');
         }
         catch(err) {
             logger.error('failed to find blockchain.config in ' + absConfigFile);

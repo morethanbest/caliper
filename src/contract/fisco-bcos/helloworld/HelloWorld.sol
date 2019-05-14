@@ -1,17 +1,17 @@
 pragma solidity ^0.4.2;
 contract HelloWorld{
 
-    uint256 name;
+    string name;
 
     function HelloWorld(){
-       name=142857;
+       name="init name";
     }
 
-    function get()constant returns(uint256){
+    function get()constant returns(string){
         return name;
     }
 
-    function set(uint256 n){
+    function set(string n){
     	name = n;
     }
 }
