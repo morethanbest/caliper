@@ -28,10 +28,7 @@ class FiscoBCOSV2 extends BlockchainInterface {
      * Nothing to do now
      */
     init() {
-        // todo: Fisco
-        const fiscoSettings = commUtils.parseYaml(this.configPath).fiscoBCOS;
-        const config = fiscoSettings.config;
-        web3sync.setWeb3(config.proxy);
+
     }
 
     /**
@@ -58,9 +55,6 @@ class FiscoBCOSV2 extends BlockchainInterface {
      * @async
      */
     async getContext(name, args, clientIdx) {
-        const fiscoSettings = commUtils.parseYaml(this.configPath).fiscoBCOS;
-        const config = fiscoSettings.config;
-        web3sync.setWeb3(config.proxy);
         return Promise.resolve();
     }
 
