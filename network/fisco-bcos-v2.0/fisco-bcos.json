@@ -1,6 +1,6 @@
 {
   "caliper": {
-    "blockchain": "fiscoBCOS-v2",
+    "blockchain": "fiscoBCOSV2",
     "command" : {
       "start": "echo start",
       "end" : "echo end"
