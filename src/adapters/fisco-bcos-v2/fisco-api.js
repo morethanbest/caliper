@@ -8,7 +8,7 @@ const commUtils = require('../../comm/util');
 const request = require('request-promise');
 const commLogger = commUtils.getLogger('fisco-api.js');
 const web3sync = require('./web3lib/web3sync');
-let intervalObj;
+let flag = 0;
 
 /**
  *
@@ -58,7 +58,7 @@ module.exports.deploy = async function (host, account, privateKey, path, name) {
     }, function (error, response, body) {
         commLogger.info('deploy tx'+JSON.stringify(body));
         if (!error && response.statusCode === 200) {
-            intervalObj = setInterval(() => {
+            const intervalObj = setInterval(() => {
                 request({
                     method: 'POST',
                     uri: host,
@@ -66,13 +66,17 @@ module.exports.deploy = async function (host, account, privateKey, path, name) {
                     body: { 'jsonrpc': '2.0', 'method': 'getTransactionReceipt', 'params': [1, body.transactionHash], 'id': 1 }
                 }, function (error, response, body) {
                     commLogger.info('query tx' + JSON.stringify(body));
+                    flag++;
                     if (typeof body.contractAddress !== 'undefined') {
+                        flag = 20;
                         commLogger.info(pathName+'contract address '+ body.contractAddress);
                         fs.writeFileSync(pathName+'.address', body.contractAddress, 'utf-8');
-                        clearInterval(intervalObj);
                     }
                 });
             }, 500);
+            if (flag >= 20) {
+                clearInterval(intervalObj);
+            }
         }
     });
 
