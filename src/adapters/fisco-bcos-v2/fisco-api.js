@@ -56,15 +56,16 @@ module.exports.deploy = async function (host, account, privateKey, path, name) {
         json: true,
         body: { 'jsonrpc': '2.0', 'method': 'sendRawTransaction', 'params': [1, signTX], 'id': 1 }
     }, function (error, response, body) {
+        commLogger.info('deploy tx'+JSON.stringify(body));
         if (!error && response.statusCode === 200) {
             intervalObj = setInterval(() => {
                 request({
                     method: 'POST',
                     uri: host,
                     json: true,
-                    body: { 'jsonrpc': '2.0', 'method': 'sendRawTransaction', 'params': [1, signTX], 'id': 1 }
+                    body: { 'jsonrpc': '2.0', 'method': 'sendRawTransaction', 'params': [1, body.transactionHash], 'id': 1 }
                 }, function (error, response, body) {
-                    commLogger.info(body);
+                    commLogger.info('query tx' + JSON.stringify(body));
                     if (typeof body.contractAddress !== 'undefined') {
                         commLogger.info(pathName+'contract address '+ body.contractAddress);
                         fs.writeFileSync(pathName+'.address', body.contractAddress, 'utf-8');
