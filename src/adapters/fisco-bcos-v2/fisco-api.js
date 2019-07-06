@@ -58,25 +58,7 @@ module.exports.deploy = async function (host, account, privateKey, path, name) {
     }, function (error, response, body) {
         commLogger.info('deploy tx'+JSON.stringify(body));
         if (!error && response.statusCode === 200) {
-            const intervalObj = setInterval(() => {
-                request({
-                    method: 'POST',
-                    uri: host,
-                    json: true,
-                    body: { 'jsonrpc': '2.0', 'method': 'getTransactionReceipt', 'params': [1, body.transactionHash], 'id': 1 }
-                }, function (error, response, body) {
-                    commLogger.info('query tx' + JSON.stringify(body));
-                    flag++;
-                    if (typeof body.contractAddress !== 'undefined') {
-                        flag = 20;
-                        commLogger.info(pathName+'contract address '+ body.contractAddress);
-                        fs.writeFileSync(pathName+'.address', body.contractAddress, 'utf-8');
-                    }
-                });
-            }, 500);
-            if (flag >= 20) {
-                clearInterval(intervalObj);
-            }
+            commLogger.info('Deploy success');
         }
     });
 

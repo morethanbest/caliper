@@ -7,16 +7,16 @@ test:
     type: local
     number: 2
   rounds:
-  - label: open-liner//名称
+  - label: open-liner
     txDuration:
-    - 3//持续时间
+    - 3
     rateControl:
     - type: fixed-rate
       opts:
-        tps: 1//发送速率
+        tps: 1
     arguments:
       money: 10000
-    callback: benchmark/fisco-bcos/v2.0/helloworld/open.js//脚本地址
+    callback: benchmark/fisco-bcos/v2.0/helloworld/open.js
   - label: query
     txDuration:
     - 3
