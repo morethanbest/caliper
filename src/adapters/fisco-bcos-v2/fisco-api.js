@@ -58,6 +58,7 @@ module.exports.deploy = async function (host, account, privateKey, path, name) {
     }, function (error, response, body) {
         commLogger.info('deploy tx'+JSON.stringify(body));
         if (!error && response.statusCode === 200) {
+            fs.writeFileSync(pathName+'.address', '0x0', 'utf-8');
             commLogger.info('Deploy success');
         }
     });

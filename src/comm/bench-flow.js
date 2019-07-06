@@ -201,16 +201,16 @@ function processResult(results, label){
         let resourceTable = monitor.getDefaultStats();
         for (let i = 1; i < resourceTable.length; i++) {
             let rJson = {
-                type: resultTable[i][0],
-                name: resultTable[i][1],
-                maxCPU: resultTable[i][2],
-                avgCPU: resultTable[i][3],
-                maxMemory: resultTable[i][4],
-                avgMemory: resultTable[i][5],
-                trafficIn: resultTable[i][6],
-                trafficOut: resultTable[i][7],
-                discRead: resultTable[i][8],
-                discWrite: resultTable[i][9],
+                type: resourceTable[i][0],
+                name: resourceTable[i][1],
+                maxCPU: resourceTable[i][2],
+                avgCPU: resourceTable[i][3],
+                maxMemory: resourceTable[i][4],
+                avgMemory: resourceTable[i][5],
+                trafficIn: resourceTable[i][6],
+                trafficOut: resourceTable[i][7],
+                discRead: resourceTable[i][8],
+                discWrite: resourceTable[i][9],
             };
             newRound.resource.push(rJson);
         }
