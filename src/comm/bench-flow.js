@@ -18,6 +18,7 @@ const Blockchain = require('./blockchain.js');
 const Monitor = require('./monitor/monitor.js');
 const Report  = require('./report.js');
 const Client  = require('./client/client.js');
+const fs = require('fs');
 const Util = require('./util.js');
 const logger = Util.getLogger('bench-flow.js');
 let blockchain, monitor, report, client;
@@ -27,7 +28,10 @@ let round = 0;              // test round
 let demo = require('../gui/src/demo.js');
 let absConfigFile, absNetworkFile;
 let absCaliperDir = path.join(__dirname, '..', '..');
-
+let finalJson = {
+    timestamp: Date.now(),
+    rounds: []
+};
 
 /**
  * Generate mustache template for test report
@@ -137,6 +141,7 @@ function printResultsByRound() {
         resultsbyround[i].unshift(i.toFixed(0));
     }
     logger.info('###all test results:###');
+    //todo 打印所有轮的基本指标数据
     printTable(resultsbyround);
 
     report.setSummaryTable(resultsbyround);
@@ -169,8 +174,19 @@ function processResult(results, label){
             r = results[0];
             r.label = label;
             resultTable[1] = getResultValue(r);
+            //todo 每轮性能指标数据
+            logger.info('each round'+JSON.stringify(resultTable[1]));
         }
-
+        let newRound = {
+            name: resultTable[1][0],
+            success: resultTable[1][1],
+            failed: resultTable[1][2],
+            sendRate: resultTable[1][3],
+            maxLatency: resultTable[1][4],
+            minLatency: resultTable[1][5],
+            throughput: resultTable[1][6],
+            resource: []
+        };
         if(resultsbyround.length === 0) {
             resultsbyround.push(resultTable[0].slice(0));
         }
@@ -181,7 +197,25 @@ function processResult(results, label){
         printTable(resultTable);
         let idx = report.addBenchmarkRound(label);
         report.setRoundPerformance(idx, resultTable);
+        //todo 每轮资源指标数据
         let resourceTable = monitor.getDefaultStats();
+        for (let i = 1; i < resourceTable.length; i++) {
+            let rJson = {
+                type: resultTable[i][0],
+                name: resultTable[i][1],
+                maxCPU: resultTable[i][2],
+                avgCPU: resultTable[i][3],
+                maxMemory: resultTable[i][4],
+                avgMemory: resultTable[i][5],
+                trafficIn: resultTable[i][6],
+                trafficOut: resultTable[i][7],
+                discRead: resultTable[i][8],
+                discWrite: resultTable[i][9],
+            };
+            newRound.resource.push(rJson);
+        }
+        finalJson.rounds.push(newRound);
+        logger.info('each round'+JSON.stringify(resourceTable));
         if(resourceTable.length > 0) {
             logger.info('### resource stats ###');
             printTable(resourceTable);
@@ -241,7 +275,7 @@ async function defaultTest(args, clientArgs, final) {
         demo.startWatch(client);
         try {
             await client.startTest(test, clientArgs, processResult, testLabel);
-
+            fs.writeFileSync('report.json', JSON.stringify(finalJson));
             demo.pauseWatch();
             success++;
             logger.info(`------ Passed '${testLabel}' testing ------`);
