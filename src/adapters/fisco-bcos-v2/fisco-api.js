@@ -63,7 +63,7 @@ module.exports.deploy = async function (host, account, privateKey, path, name) {
                     method: 'POST',
                     uri: host,
                     json: true,
-                    body: { 'jsonrpc': '2.0', 'method': 'sendRawTransaction', 'params': [1, body.transactionHash], 'id': 1 }
+                    body: { 'jsonrpc': '2.0', 'method': 'getTransactionReceipt', 'params': [1, body.transactionHash], 'id': 1 }
                 }, function (error, response, body) {
                     commLogger.info('query tx' + JSON.stringify(body));
                     if (typeof body.contractAddress !== 'undefined') {
