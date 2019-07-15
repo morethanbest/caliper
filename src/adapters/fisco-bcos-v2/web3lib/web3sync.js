@@ -601,7 +601,7 @@ exports.signTransaction = signTransaction;
 
 function getSignTX(account, privateKey, to, func, params, blockLimit) {
     let tx_data = getTxData(func, params);
-
+    tx_data = tx_data.indexOf('0x') === 0 ? tx_data.slice(2) : tx_data;
     let postdata = {
         data: tx_data,
         from: account,
@@ -615,7 +615,7 @@ function getSignTX(account, privateKey, to, func, params, blockLimit) {
 exports.getSignTX = getSignTX;
 
 function getDeploySignTX(account, privateKey, bin, blockLimit) {
-    let tx_data = bin.indexOf('0x') === 0 ? bin : ('0x'+bin);
+    let tx_data = bin.indexOf('0x') === 0 ? bin.slice(2) : bin;
     console.log(tx_data);
 
     let postdata = {
