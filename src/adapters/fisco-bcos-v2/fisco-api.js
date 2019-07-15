@@ -68,19 +68,21 @@ module.exports.deploy = async function (host, account, privateKey, path, name) {
     });
     commLogger.info('Deploy tx resp: '+JSON.stringify(res));
     commLogger.info('Send deploy tx success. Wait 10 seconds for deploying.');
-    commLogger.info('');
     await sleep(10000);
-    // if (typeof res.result === 'undefined') {
+    if (typeof res.result === 'undefined') {
         fs.writeFileSync(pathName + '.address', '0x0000000000000000000000000000000000000000', 'utf-8');
-    // } else {
+    } else {
         let grt = await request({
             method: 'POST',
             uri: host,
             json: true,
             body: { 'jsonrpc': '2.0', 'method': 'getTransactionReceipt', 'params': [1, res.result], 'id': 1 }
         });
-        if (typeof grt.contractAddress !== 'undefined')
+        if (typeof grt.contractAddress !== 'undefined') {
             fs.writeFileSync(pathName + '.address', grt.contractAddress, 'utf-8');
-    commLogger.info('Get receipt resp: '+JSON.stringify(grt));
-    // }
+        } else {
+            fs.writeFileSync(pathName + '.address', '0x0000000000000000000000000000000000000000', 'utf-8');
+        }
+        commLogger.info('Get receipt resp: '+JSON.stringify(grt));
+    }
 };
